@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fearless Love Church Attendance</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add the CSS for the watermark image -->
+   
+</head>
+<body>
+
+    <style>
+        .custom-btn {
+            border-radius: 200px 0 200px 0;
+            border-width: 0 75px 0 75px;
+            padding: 10px 10px; /* Adjust the values to control the corners */
+        }
+    </style>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <img src="image/FLC card.png" alt="card" class="text-center">
+                <h2 class="text-center">Attendees</h2>
+                <div class="text-center">
+                    <button id="decrement" class="btn custom-btn btn-danger">-</button>
+                    <span id="count" class="mx-3">0</span>
+                    <button id="increment" class="btn custom-btn btn-success">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // JavaScript logic for the counting app
+        let count = 0;
+
+        // Function to update the count and display it
+        function updateCount() {
+            document.getElementById("count").textContent = count;
+        }
+
+        // Event listener for the increment button
+        document.getElementById("increment").addEventListener("click", function() {
+            count++;
+            updateCount();
+        });
+
+        // Event listener for the decrement button
+        document.getElementById("decrement").addEventListener("click", function() {
+            if (count > 0) {
+                count--;
+                updateCount();
+            }
+        });
+    </script>
+</body>
+</html>
