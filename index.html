@@ -7,9 +7,10 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Add the CSS for the watermark image -->
-   
-</head>
-<body>
+    <!-- Include Bootstrap-datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Include Bootstrap-datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <style>
         .custom-btn {
@@ -17,14 +18,23 @@
             border-width: 0 50px 0 50px;
             padding: 10px 10px; /* Adjust the values to control the corners */
         }
+
+        body {
+            background-color: white; /* Change this color to your desired background color */
+        }
     </style>
-    
+</head>
+<body>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <img src="image/FLC card.png" alt="card" class="text-center">
-                <h2 class="text-center">Attendees</h2>
-                <div class="text-center">
+            <div class="col-12 col-md-6 mx-auto text-center">
+                <img src="image/FLC logo.png" alt="card" class="mb-3">
+                <h2>Attendees</h2>
+                <div>
+                    <span id="current-date" class="mx-3"></span>
+                </div>
+                
+                <div class="my-3">
                     <button id="decrement" class="btn custom-btn btn-danger">-</button>
                     <span id="count" class="mx-3">0</span>
                     <button id="increment" class="btn custom-btn btn-success">+</button>
@@ -41,25 +51,40 @@
     <script>
         // JavaScript logic for the counting app
         let count = 0;
-
+    
         // Function to update the count and display it
         function updateCount() {
             document.getElementById("count").textContent = count;
         }
-
+    
+        // Function to update the current date
+        function updateCurrentDate() {
+            const currentDateElement = document.getElementById("current-date");
+            const currentDate = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+            currentDateElement.textContent = formattedDate;
+        }
+    
         // Event listener for the increment button
-        document.getElementById("increment").addEventListener("click", function() {
+        document.getElementById("increment").addEventListener("click", function () {
             count++;
             updateCount();
         });
-
+    
         // Event listener for the decrement button
-        document.getElementById("decrement").addEventListener("click", function() {
+        document.getElementById("decrement").addEventListener("click", function () {
             if (count > 0) {
                 count--;
                 updateCount();
             }
         });
+    
+        // Update the current date when the page loads
+        updateCurrentDate();
+    
+        // Update the current date every day (at midnight)
+        setInterval(updateCurrentDate, 24 * 60 * 60 * 1000); // Update every 24 hours
     </script>
 </body>
 </html>
