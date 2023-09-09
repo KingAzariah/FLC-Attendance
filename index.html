@@ -39,6 +39,13 @@
                     <span id="count" class="mx-3">0</span>
                     <button id="increment" class="btn custom-btn btn-success">+</button>
                 </div>
+                
+                <!-- Form for making POST requests to Airtable -->
+                <form id="attendance-form">
+                    <!-- Hidden input for attendance count -->
+                    <input type="hidden" id="attendanceCount" name="attendanceCount" value="0">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
@@ -51,12 +58,14 @@
     <script>
         // JavaScript logic for the counting app
         let count = 0;
-    
+
         // Function to update the count and display it
         function updateCount() {
             document.getElementById("count").textContent = count;
+            // Update the hidden input field for attendance count
+            document.getElementById("attendanceCount").value = count;
         }
-    
+
         // Function to update the current date
         function updateCurrentDate() {
             const currentDateElement = document.getElementById("current-date");
@@ -65,13 +74,13 @@
             const formattedDate = currentDate.toLocaleDateString('en-US', options);
             currentDateElement.textContent = formattedDate;
         }
-    
+
         // Event listener for the increment button
         document.getElementById("increment").addEventListener("click", function () {
             count++;
             updateCount();
         });
-    
+
         // Event listener for the decrement button
         document.getElementById("decrement").addEventListener("click", function () {
             if (count > 0) {
@@ -79,12 +88,38 @@
                 updateCount();
             }
         });
-    
+
         // Update the current date when the page loads
         updateCurrentDate();
-    
+
         // Update the current date every day (at midnight)
         setInterval(updateCurrentDate, 24 * 60 * 60 * 1000); // Update every 24 hours
+
+        // Handle form submission
+        document.getElementById("attendance-form").addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            // Get the form data
+            const formData = new FormData(this);
+            // Make a POST request to your Airtable API endpoint
+            fetch("https://api.airtable.com/v0/YOUR_BASE_ID/YOUR_TABLE_NAME", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer YOUR_API_KEY",
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response (e.g., show a success message)
+                console.log("Data sent to Airtable:", data);
+                alert("Attendance data sent successfully!");
+            })
+            .catch(error => {
+                // Handle errors (e.g., show an error message)
+                console.error("Error sending data to Airtable:", error);
+                alert("Error sending attendance data. Please try again later.");
+            });
+        });
     </script>
 </body>
 </html>
